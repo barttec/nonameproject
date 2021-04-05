@@ -3,7 +3,7 @@
 
 ```
 {
- map: [ 1, 2, 3, 1, 2, 3, 1 ],
+ map: [ idoftile, 2, 3, 1, 2, 3, 1 ],
  tags: {
   1: "grass.png",
   2: "stone.png",
