@@ -1,14 +1,12 @@
+// File Contains:
+//     inital connection call to server
+//     network game input
+//     debug echo
+
+
 // const io = require("socket.io-client");
-
 const socket = io(); //the socket server will be determined forom the same domain via window.location object if not io("https://server-domain.com"); you can also specifiy namespaces to connect to and use wws: or https: via io("/admin");
-console.log('socketionow');
-
-socket.on("connect", (data) => {
-    console.log('we in');
-});
-socket.on("echo", (data) => {
-    console.log("server says:", data);
-});
+console.log('socketio module loaded');
 
 function sendmove(data) {
     console.log(data);
@@ -34,3 +32,6 @@ socket.on("playermove", (data) => {
     console.log("server says:", data);
 });
 
+socket.on("echo", (data) => {
+    console.log("server says:", data);
+});
