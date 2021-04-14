@@ -1,9 +1,5 @@
-let specificroomjoin = confirm("join specific room?")
-console.log(specificroomjoin)
-let roomname;
-if(specificroomjoin){
-    roomname = prompt("roomname")
-    socket.emit("joinroom", roomname)
+function joinroom(roomname){
+    socket.emit("joinroom", roomname);
 }
 
 socket.on("disconnect", () => {
@@ -11,10 +7,9 @@ socket.on("disconnect", () => {
 });
 socket.on("connect", () => {
     socket.emit("joinroom", roomname)
-    console.warn("reconnected to room", roomname);
+    console.log("%creconnected to room: " +roomname, 'color: White ;background-color: green;padding: 5px;');
 })
 socket.on("joinedroom", (data) => {
-    alert("joined room", data)
+    console.log("%cjoined room: " + data, 'color: White ;background-color: blue;padding: 5px;');
 })
-
 

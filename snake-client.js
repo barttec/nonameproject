@@ -23,8 +23,6 @@ var DOWN = 1;
 var LEFT = 2;
 var RIGHT = 3;
 
-var game = new Phaser.Game(config);
-
 function preload ()
 {
     this.load.image('food', 'https://raw.githubusercontent.com/photonstorm/phaser3-examples/master/public/assets/games/snake/food.png');
@@ -57,18 +55,25 @@ function update (time, delta)
     * the LEFT cursor, it ignores it, because the only valid directions you
     * can move in at that time is up and down.
     */
+    // main player
+    snake = players[0];
+    cursors = controllers[0];
+    if (cursors.left.isDown) {
+        sendmove("left");
+        snake.faceLeft();
+    } else if (cursors.right.isDown) {
+        sendmove("right");
+        snake.faceRight();
+    } else if (cursors.up.isDown) {
+        sendmove("up");
+        snake.faceUp();
+    } else if (cursors.down.isDown) {
+        sendmove("down");
+        snake.faceDown();
+    }
     for (let index = 0; index < players.length; index++) {
         snake = players[index];
         cursors = controllers[index];
-        if (cursors.left.isDown) {
-            snake.faceLeft();
-        } else if (cursors.right.isDown) {
-            snake.faceRight();
-        } else if (cursors.up.isDown) {
-            snake.faceUp();
-        } else if (cursors.down.isDown) {
-            snake.faceDown();
-        }
         if (snake.update(time)) {
             //  If the snake updated, we need to check for collision against food
             if (snake.collideWithFood(food)) {

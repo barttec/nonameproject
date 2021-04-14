@@ -242,5 +242,17 @@
 			"});"
 		],
 		"description": "Networking in js, socketio best lib"
+	},
+	"console log sucess": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"log-sucess",
+			"sucess",
+			"print"
+		],
+		"body": [
+			"console.log('%csucess!', 'color: White ;background-color: green;padding: 5px;');"
+		],
+		"description": "sucess log"
 	}
 });
