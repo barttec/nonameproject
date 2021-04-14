@@ -6,15 +6,16 @@
   "dependencies": {
     "express": "^4.17.1",
     "marked": "^2.0.0",
-    "sanitize-html": "^2.3.2"
+    "sanitize-html": "^2.3.2",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1"
   },
   "engines": {
     "node": "10.x"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo test",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
