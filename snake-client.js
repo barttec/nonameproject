@@ -89,7 +89,7 @@ function update (time, delta)
     });
 }
 
-/**
+/**d
 * We can place the food anywhere in our 40x30 grid
 * *except* on-top of the snake, so we need
 * to filter those out of the possible food locations.
