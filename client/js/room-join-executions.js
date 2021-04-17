@@ -1,2 +1,0 @@
-joinroom('bruh')
-// roomusers()
