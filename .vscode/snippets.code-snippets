@@ -251,8 +251,21 @@
 			"print"
 		],
 		"body": [
-			"console.log('%csucess!', 'color: White ;background-color: green;padding: 5px;');"
+			"console.log('%c$0', 'color: White ;background-color: green;padding: 5px;');"
 		],
 		"description": "sucess log"
+	},
+	"console log error": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"log-error",
+			"fail",
+			"failure",
+			"errror-log"
+		],
+		"body": [
+			"console.log('%c$0', 'color: White ;background-color: red;padding: 5px;');"
+		],
+		"description": "eror log"
 	}
 });

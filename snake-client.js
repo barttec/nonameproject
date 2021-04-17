@@ -11,8 +11,8 @@ var config = {
     }
 };
 
-var players = [];
-var controllers = [];
+var snake;
+var controller;
 var snake;
 var cursors;
 var food;
@@ -29,16 +29,18 @@ function preload ()
     this.load.image('body', 'https://raw.githubusercontent.com/photonstorm/phaser3-examples/master/public/assets/games/snake/body.png');
 }
 
+var phaserthis;// expose the object to add players
 function create ()
 {
-    
     food = new Food(this, 3, 4);
 
     //player one controls and player
-    players[0] = new Snake(this, 8, 8);
-    controllers[0] = this.input.keyboard.createCursorKeys(); //  Create our keyboard controls
-    players[1] = new Snake(this, 1, 1);
-    controllers[1] = this.input.keyboard.createCursorKeys(); //  Create our keyboard controls
+    phaserthis = this;
+    
+    snake = new Snake(this, 8, 8);
+    cursors = this.input.keyboard.createCursorKeys(); //  Create our keyboard controls
+    // this.add.text(0, 0, 'playername', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+
 }
 
 function update (time, delta)
@@ -56,31 +58,35 @@ function update (time, delta)
     * can move in at that time is up and down.
     */
     // main player
-    snake = players[0];
-    cursors = controllers[0];
     if (cursors.left.isDown) {
-        sendmove("left");
+        sendmove("left", snake.headPosition.x, snake.headPosition.y);
         snake.faceLeft();
     } else if (cursors.right.isDown) {
-        sendmove("right");
+        sendmove("right", snake.headPosition.x, snake.headPosition.y);
         snake.faceRight();
     } else if (cursors.up.isDown) {
-        sendmove("up");
+        sendmove("up", snake.headPosition.x, snake.headPosition.y);
         snake.faceUp();
     } else if (cursors.down.isDown) {
-        sendmove("down");
+        sendmove("down", snake.headPosition.x, snake.headPosition.y);
         snake.faceDown();
     }
-    for (let index = 0; index < players.length; index++) {
-        snake = players[index];
-        cursors = controllers[index];
-        if (snake.update(time)) {
-            //  If the snake updated, we need to check for collision against food
-            if (snake.collideWithFood(food)) {
-                repositionFood();
-            }
+    if (snake.update(time)) {
+        //  If the snake updated, we need to check for collision against food
+        if (snake.collideWithFood(food)) {
+            // repositionFood();// random per user == shit
+            // instead make something that is genarated from same seed
+            positionFood();
         }
     }
+    gameplayers.forEach(player => {
+        if (player.gameobject.update(time)) {
+            //  If the snake updated, we need to check for collision against food
+            if (player.gameobject.collideWithFood(food)) {
+                positionFood();
+            }
+        }
+    });
 }
 
 /**
@@ -131,3 +137,15 @@ function repositionFood ()
         return false;
     }
 }
+
+function positionFood() {
+    socket.emit('positionFood')
+    let x = String(new Date().getSeconds())[0]+5
+    let y = Math.abs(Number(String(new Date().getSeconds())[0]) - 6)+5;
+    food.setPosition(x * 16, y * 16);
+    return true;
+}
+socket.on("positionFood", () =>{
+    positionFood();
+});
+var game;

@@ -45,8 +45,7 @@ io.on('connection', client => {
         client.username = data;
         if(debug){console.log("client:", client.id, " is called:", client.username);}
         client.emit("namechanged", data);
-        let res = [client.id, client.username]
-        brodcasttootherplayers(client, "namechange", res);
+        brodcasttootherplayers(client, "newjoin");// its as if someone new joined
     });
     
     client.on('roomclients', data => { // send back clients in current rooms
@@ -55,8 +54,13 @@ io.on('connection', client => {
     });
 
     client.on('playermove', data => {
-        let res = [client.id, data];
+        console.log(data);
+        
+        let res = [client.id, data[0], data[1], data[2]]; //id, direction, x, y
         brodcasttootherplayers(client, "playermove", res);
+    });
+    client.on('positionFood', data => {
+        brodcasttootherplayers(client, "positionFood");
     });
     client.on('disconnect', () => {
         if(debug){console.log('disconnect ',client.username);}
