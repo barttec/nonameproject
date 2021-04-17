@@ -6,17 +6,29 @@
     <meta name="description" content="This is an example of a meta description.">
     <link rel="stylesheet" type="text/css" href="theme.css">
     <script src="socket.io.js"></script>
-    <script src="network-client.js"></script>
+    <script src="room-join.js"></script>
+    <script src="playertable-updater.js"></script>
+    <script src="room-join-executions.js"></script>
+    <script src="network-to-game-client.js"></script>
     <script src="phaser.js"></script>
     <script src="phaser-classes.js"></script>
     <script src="snake-client.js"></script>
-    <script src="room-join.js"></script>
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body>
-    <div id="phaser-example" style="display: flex;justify-content: center;">
+    <div id="phaser-example" style="display: flex;justify-content: center;"></div>
+    <div style="display: flex;justify-content: center;">
+    <input id="name" type="text" placeholder="user name"></input>
+    <button onclick="setusername(document.getElementById('name').value);">set username!</button>
+    </div>
+    <div style="display: flex;justify-content: center;">
+    <input id="room" type="text" placeholder="room name"></input>
+    <button onclick="joinroom(document.getElementById('room').value);">join room!</button>
+    </div>
+    <div style="display: flex;justify-content: center;">
+    <textarea style="width: 80%; height: 200px;" id="clients"></textarea>
     </div>
   </body>
 </html>

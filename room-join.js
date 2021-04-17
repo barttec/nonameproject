@@ -1,17 +1,24 @@
 //File contains:
+//    server join
 //    room logic
 //        room join request
-//        reconnecting to a room
 //        name genaration
 //        name requesting
 
 
-let roomname;
-let username;
+var roomname;
+var username;
+
+
+// const io = require("socket.io-client");
+const socket = io(); //the socket server will be determined forom the same domain via window.location object if not io("https://server-domain.com"); you can also specifiy namespaces to connect to and use wws: or https: via io("/admin");
+console.log('socketio module loaded');
 
 function joinroom(data){
     if(data != undefined){
         roomname = data
+        console.log('setting roomname to input name');
+        
     }
     setusername(); // give client username before connecting
     socket.emit("joinroom", roomname);
@@ -23,45 +30,12 @@ function setusername(data){
         username = sillyname();
     }
     socket.emit("setusername", username)
+    roomusers() // update the playertable
 }
 
 function roomusers() {
     socket.emit("roomclients");
 }
-socket.on("roomclients", (data) => {
-    console.log('total clients:',data.length);
-    data.forEach(client => {
-        console.log(client);        
-    });
-});
-
-
-let initconnection = true;
-socket.on("connect", () => {
-    if(initconnection) {
-        roomname = socket.id// originaly socket joins room of its id, we output that on first connection
-        console.log("%cconnected to server, id: " +roomname, 'color: White ;background-color: green;padding: 5px;');    
-        initconnection = false; //each subsequent connection is a reconnect to server
-    } else {
-        setusername(); // reestablish name on the server
-        socket.emit("joinroom", roomname) // we reconnect to room we have disconnected from
-        console.log("%creconnected to room: " +roomname, 'color: White ;background-color: green;padding: 5px;');    
-    }
-})
-
-socket.on("joinedroom", (data) => {
-    console.log("%cjoined room: " + data, 'color: White ;background-color: blue;padding: 5px;');
-})
-
-socket.on("namechanged", (data) => {
-    console.log("%cchanged name: " + data, 'color: White ;background-color: blue;padding: 5px;');
-})
-
-socket.on("disconnect", () => {
-    console.log("%cdisconnected, attempting reconnection", 'color: White ;background-color: red;padding: 5px;');
-});
-
-
 
 function sillyname() {
     var firstNames = ["Runny", "Buttercup", "Dinky", "Stinky", "Crusty", "Greasy","Gidget", "Cheesypoof", "Lumpy", "Wacky", "Tiny", "Flunky","Fluffy", "Zippy", "Doofus", "Gobsmacked", "Slimy", "Grimy", "Salamander", "Oily", "Burrito", "Bumpy", "Loopy", "Snotty", "Irving", "Egbert"];
