@@ -55,7 +55,6 @@ io.on('connection', client => {
 
     client.on('playermove', data => {
         console.log(data);
-        
         let res = [client.id, data[0], data[1], data[2]]; //id, direction, x, y
         brodcasttootherplayers(client, "playermove", res);
     });
