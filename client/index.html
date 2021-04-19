@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <title>Untitled</title>
     <meta name="description" content="This is an example of a meta description.">
-    <link rel="stylesheet" type="text/css" href="theme.css">
+    <link rel="stylesheet" type="text/css" href="css\theme.css">
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body>
-    <div id="phaser-example" style="display: flex;justify-content: center;"></div>
+    <canvas id="viewport" width="640" height="480"></canvas>
+    <!-- <div id="phaser-example" style="display: flex;justify-content: center;"></div>
     <div style="display: flex;justify-content: center;">
     <input id="name" type="text" placeholder="user name"></input>
     <button onclick="setusername(document.getElementById('name').value);">set username!</button>
@@ -21,14 +22,12 @@
     </div>
     <div style="display: flex;justify-content: center;">
     <textarea style="width: 80%; height: 200px;" id="clients"></textarea>
-    </div>
+    </div> -->
   </body>
-  <script src="socket.io.js"></script>
-  <script src="room-join.js"></script>
-  <script src="playertable-updater.js"></script>
-  <script src="room-join-executions.js"></script>
-  <script src="phaser.js"></script>
-  <script src="phaser-classes.js"></script>
-  <script src="snake-client.js"></script>
-  <script src="network-to-game-client.js"></script>
+  <!-- <script src="libaries\socket.io.js"></script> -->
+  <!-- <script src="libaries\socket.io.js.map"></script> -->
+  <!-- <script src="libaries\phaser.js"></script> -->
+  <!-- <script src="js\phaser-classes.js"></script> -->
+  <script src="js\game-logic.js"></script>
+  <!-- <script src="js\networking.js"></script> -->
 </html>

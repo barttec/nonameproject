@@ -1,17 +1,14 @@
 const express = require('express');
-const { disconnect } = require('node:process');
 const app = express();
 const sanitizeHtml = require('sanitize-html');
 
 app.get('/*', (req, res) => {
-    let data = "404, page not found";
     let clean = sanitizeHtml(req.params[0]);
     if(clean == "") {
         clean = "index.html";
     }
-    // console.log("request for", clean);
     try {
-        res.sendFile(clean, { root: "." }); // send all other files as the files     
+        res.sendFile(clean, { root: "client" }); // send all other files as the files     
     } catch (error) {
         console.log(String(error).split("at Object.openSync")[0]);
     }
@@ -29,17 +26,17 @@ io.on('connection', client => {
     client.on('setusername', (data) => {
         setusername(client, data);
     });
-    client.on('roomclients', data => { // send back clients in current rooms
-        roomclients(client,data); // perhaps make it so that the client doesnt need to re send the request for players // make it so server imediatly sends roomclients on newjoin
+    client.on('roomclients', (data) => { // send back clients in current rooms
+        roomclients(client, data); // perhaps make it so that the client doesnt need to re send the request for players // make it so server imediatly sends roomclients on newjoin
     });
-    client.on('playermove', data => {
+    client.on('playermove', (data) => {
         playermove(client, data);
     });
-    client.on('positionFood', data => {
+    client.on('positionFood', (data) => {
         positionFood(client, data);
     });
-    client.on('disconnect', () => {
-        disconnect(client, data);
+    client.on('disconnect', (data) => {
+        disconnected(client, data);
     });
 
 });
@@ -79,7 +76,7 @@ function playermove(client, data) {
     let res = [client.id, data[0], data[1], data[2]]; //id, direction, x, y
     brodcasttootherplayers(client, "playermove", res);
 }
-function disconnect(client, data) {
+function disconnected(client, data) {
     if(debug){console.log('disconnect ',client.username);}
     // the "original" client no longer is in any rooms
     // we replace him with a copy which is a fake to only get previous room

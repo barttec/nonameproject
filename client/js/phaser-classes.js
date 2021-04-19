@@ -189,3 +189,57 @@ const Snake = new Phaser.Class({
     }
 
 });
+
+const Square = new Phaser.Class({
+
+    initialize:
+
+    function Square (scene, x, y)
+    {
+        this.body = scene.add.group();
+        this.head = this.body.create(x * 16, y * 16, 'body');
+        this.head.setOrigin(0);
+
+        this.alive = true;
+        this.speed = 100;
+        this.moveTime = 0;
+        this.gridsize = 16;
+    },
+    movedirection: function (direction, time) {
+        if (time >= this.moveTime) {
+        switch (direction) {
+            case 0:
+                this.head.x += this.gridsize;
+                break;
+            case 90:
+                this.head.y -= this.gridsize;
+                break;
+            case 180:
+                this.head.x -= this.gridsize;
+                break;
+            case 270:
+                this.head.y += this.gridsize;
+                break;
+            case 45:
+                this.head.x += this.gridsize;
+                this.head.y -= this.gridsize;
+                break;
+            case 135:
+                this.head.x -= this.gridsize;
+                this.head.y -= this.gridsize;
+                break;
+            case 225:
+                this.head.x -= this.gridsize;
+                this.head.y += this.gridsize;
+                break;
+            case 315:
+                this.head.x += this.gridsize;
+                this.head.y += this.gridsize;
+                break;
+            default:
+                break;
+        }
+        }
+        this.moveTime = time + this.speed;
+    }
+});
