@@ -110,8 +110,8 @@ function handleplayermove(data) {
                 player.name = data.name
                 player.keyarray = data.keyarray;
                 player.velocity = data.velocity;
-                player.x = data.x;
-                player.y = data.y;
+                // player.x = data.x;
+                // player.y = data.y;
                 found = true;
             }
         });
