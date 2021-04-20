@@ -5,7 +5,7 @@ var context = canvas.getContext("2d");
  
 
 let randx = Math.floor(Math.random()*(canvas.width/4));
-let randy = Math.floor(Math.random()*(canvas.height/4));
+let randy = Math.floor(Math.random()*(canvas.height/4yyyyy));
 if(Math.floor(Math.random()*2)){
     randy = randy * -1;
 }
@@ -14,7 +14,7 @@ if(Math.floor(Math.random()*2)){
 }
 
 
-var player1 = {
+var player1 = {y
     id: socket.id,
     color: getRandomColor(),
     x: (canvas.width/2)+randx,

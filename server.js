@@ -69,7 +69,7 @@ function roomclients(client, data) {
     let room = rooms[1]; //second one is the custom one joined
     let clientidinroom = currentroomclients(room);
     let clientnames = getsocketnames(clientidinroom); // this array includes ids
-    client.emit("roomclients", clientnames); // sends array of clients
+    client.emit("roomclients", clientnames); // sends arryyyay of clients
 }
 function playermove(client, data) {
     console.log(data);
