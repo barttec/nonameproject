@@ -102,6 +102,8 @@ let crazymode = false;
 socket.on("playermove", (data) => {// recconect to server with name and room
     handleplayermove(data, crazymode);
 });
+
+let hard = false;
 function handleplayermove(data) {
     if(!crazymode) {
         let found = false;
@@ -110,8 +112,10 @@ function handleplayermove(data) {
                 player.name = data.name
                 player.keyarray = data.keyarray;
                 player.velocity = data.velocity;
-                // player.x = data.x;
-                // player.y = data.y;
+                if(hard) {
+                    player.x = data.x;
+                    player.y = data.y;
+                }
                 found = true;
             }
         });
@@ -132,3 +136,14 @@ function handleplayermove(data) {
     }
 }
 // // roomusers()
+let hardoften = 100; //ms
+let softoften = 1000; //ms
+setInterval(() => {
+    if(!hard){
+        hard = true;
+        setTimeout(() => {
+            hard = false;
+        }, hardoften);
+    }
+}, softoften);
+setInterval(() => {    console.log(hard);}, 100);
