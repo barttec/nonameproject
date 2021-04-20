@@ -71,6 +71,7 @@ socket.on("connect", () => {// recconect to server with name and room
     }
 })
 socket.on("joinedroom", (data) => {// confirmation of room join
+
     roomusers();// after room update update players
     console.log("%cjoined room: " + data, 'color: White ;background-color: blue;padding: 5px;');
 })
@@ -91,6 +92,7 @@ socket.on("dcbruh", data => {
             console.log(data);
         }
     }
+    roomusers()
 });
 socket.on("playerjoin", (data) => {// recconect to server with name and room
     roomusers();
@@ -105,6 +107,7 @@ function handleplayermove(data) {
         let found = false;
         playerarray.forEach(player => {
             if(data.id == player.id) {
+                player.name = data.name
                 player.keyarray = data.keyarray;
                 player.velocity = data.velocity;
                 player.x = data.x;

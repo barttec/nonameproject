@@ -51,13 +51,13 @@ function joinroom(client, data) {
     if(debug){console.log("client:", client.id, " joins room:", data);}
     client.currentroom = data;
     client.emit("joinedroom", data);// echo sucessfull data back to clinet
-    brodcasttootherplayers(client, "newjoin"); // asks clients to re-request ammount of players
+    brodcasttootherplayers(client, "playerjoin"); // asks clients to re-request ammount of players
 }
 function setusername(client, data) {
     client.username = data;
     if(debug){console.log("client:", client.id, " is called:", client.username);}
     client.emit("namechanged", data);
-    brodcasttootherplayers(client, "newjoin");// its as if someone new joined
+    brodcasttootherplayers(client, "playerjoin");// its as if someone new joined
 }
 function roomclients(client, data) {
     let res = client.rooms;
