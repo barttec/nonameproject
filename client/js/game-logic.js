@@ -1,7 +1,24 @@
+// The function gets called when the window is fully loaded
+// Get the canvas and context
+var canvas = document.getElementById("viewport"); 
+var context = canvas.getContext("2d");
+ 
+
+let randx = Math.floor(Math.random()*(canvas.width/4));
+let randy = Math.floor(Math.random()*(canvas.height/4));
+if(Math.floor(Math.random()*2)){
+    randy = randy * -1;
+}
+if(Math.floor(Math.random()*2)){
+    randx = randx * -1;
+}
+
+
 var player1 = {
-    color: "#FF0000",
-    x: 100,
-    y: 100,
+    id: socket.id,
+    color: getRandomColor(),
+    x: (canvas.width/2)+randx,
+    y: (canvas.height/2)+randy,
     size: 16,
     name: "player1",
     velocity: {
@@ -15,11 +32,8 @@ var player1 = {
     keyarray: [false,false,false,false]// w a s d
 }
 
-// The function gets called when the window is fully loaded
-// Get the canvas and context
-var canvas = document.getElementById("viewport"); 
-var context = canvas.getContext("2d");
- 
+var clientarray = [];
+
 // Timing and frames per second
 var lastframe = 0;
 var fpstime = 0;
@@ -28,7 +42,7 @@ var fps = 0;
  
 var playerarray = [player1];
 
-function addplayer(color, x, y, name) {
+function addplayer(id, color, x, y, name, ) {
     if(color == undefined) {
         color = getRandomColor();
     }
@@ -39,7 +53,11 @@ function addplayer(color, x, y, name) {
     if(name == undefined) {
         name = "machine";
     }
+    if(id == undefined) {
+        throw console.error('fuck this shit we need an id');
+    }
     let playerobject = {
+        id: id,
         color: color,
         x: x,
         y: y,
@@ -129,7 +147,7 @@ function drawFrame() {
 
     playerarray.forEach(player => {
         let yoffset = 20;
-        let xoffset = 30;
+        let xoffset = player.name.length * 4.25; // perfect value
         drawText("#000000", "12px Verdana", player.name, player.x-xoffset, player.y-yoffset);
         let x1 = (player.x-player.size);
         let y1 = (player.y-player.size);
@@ -147,7 +165,12 @@ function drawFrame() {
         player.velocity.y = Math.round((player.velocity.y * player.decelaration)*1000)/1000;
 
         // decelaration when player is not moving
-        if(player.moving == false) {
+        // check if moing
+        let count = 0;
+        player.keyarray.forEach(key => {
+            if(key) { count++;}
+        });
+        if(count == 0) {
             player.velocity.x = Math.round((player.velocity.x * (player.decelaration*player.decelaration))*1000)/1000;
             player.velocity.y = Math.round((player.velocity.y * (player.decelaration*player.decelaration))*1000)/1000;    
         }
@@ -170,7 +193,20 @@ function drawFrame() {
         }
     });
     //draw fps
-    drawFps();      
+    drawFps();   
+    
+    let textOrder = 1;
+    drawText("#000000", "12px Verdana", "roomname: ", 13, 15+(textOrder)*15);
+    textOrder++;
+    drawText("#000000", "12px Verdana", roomname, 20, 15+(textOrder)*15)
+    textOrder++;
+    drawText("#000000", "12px Verdana", "players:", 13, 15+(textOrder)*15)
+    textOrder++;
+    for (let index = 0; index < clientarray.length; index++) {
+        const client = clientarray[index];
+        drawText("#000000", "12px Verdana", client, 20, 15+(textOrder)*15)
+        textOrder++
+    }
 }
 function drawRectangle(color, x1, y1, dx, dy) {       
     context.fillStyle = color;
@@ -180,7 +216,7 @@ function drawFps() {
     // Display fps
     context.fillStyle = "#000000";
     context.font = "12px Verdana";
-    context.fillText("Fps: " + fps, 13, 15);
+    context.fillText("fps: " + fps, 13, 15);
 }
 function drawText(color, font, text, x, y) {
     context.fillStyle = color;
@@ -201,7 +237,7 @@ function keydown(e) {
     let press = direction(e);
     updateKeyArray(e, press, true);
     movePlayer(player1)
-    player1.moving = true;
+    // player1.moving = true;
 }
 function updateKeyArray(e, press, value) {
     let oldkeyarray = JSON.stringify(player1.keyarray); // deepcopy of player1.keyarray
@@ -231,11 +267,12 @@ let lastsend = new Date().getTime();
 function multiplayermove() {
     console.log('server get fucked', new Date().getTime()-lastsend);
     lastsend = new Date().getTime();
+    socket.emit("playermove", player1)
 }
 function keyup(e) {
     let press = direction(e);
     updateKeyArray(e, press, false);
-    player1.moving = false;
+    // player1.moving = false;
 }
 function direction(e) {
     let press;
@@ -278,4 +315,9 @@ function movePlayer(player){
 
 }
 
-window.onload = init;
+window.onload = function() {
+    init();
+    joinroom('bruh')
+    roomusers();
+    setusername();
+}
