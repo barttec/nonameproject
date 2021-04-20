@@ -69,12 +69,10 @@ function roomclients(client, data) {
     let room = rooms[1]; //second one is the custom one joined
     let clientidinroom = currentroomclients(room);
     let clientnames = getsocketnames(clientidinroom); // this array includes ids
-    client.emit("roomclients", clientnames); // sends arryyyay of clients
+    client.emit("roomclients", clientnames); // sends arryyyyyay of clients
 }
 function playermove(client, data) {
-    console.log(data);
-    let res = [client.id, data[0], data[1], data[2]]; //id, direction, x, y
-    brodcasttootherplayers(client, "playermove", res);
+    brodcasttootherplayers(client, "playermove", data);
 }
 function disconnected(client, data) {
     if(debug){console.log('disconnect ',client.username);}
@@ -82,10 +80,7 @@ function disconnected(client, data) {
     // we replace him with a copy which is a fake to only get previous room
     let fakeclient = new Object;
     fakeclient.rooms = [client.id,client.currentroom]        
-    brodcasttootherplayers(fakeclient, "newjoin");
-}
-function positionFood(client, data) {
-    brodcasttootherplayers(client, "positionFood");
+    brodcasttootherplayers(fakeclient, "dcbruh", fakeclient);
 }
 server.listen(port);
 console.log('server started at',port);

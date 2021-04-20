@@ -5,7 +5,7 @@ var context = canvas.getContext("2d");
  
 
 let randx = Math.floor(Math.random()*(canvas.width/4));
-let randy = Math.floor(Math.random()*(canvas.height/4yyyyy));
+let randy = Math.floor(Math.random()*(canvas.height/4));
 if(Math.floor(Math.random()*2)){
     randy = randy * -1;
 }
@@ -14,7 +14,7 @@ if(Math.floor(Math.random()*2)){
 }
 
 
-var player1 = {y
+var player1 = {
     id: socket.id,
     color: getRandomColor(),
     x: (canvas.width/2)+randx,
@@ -236,7 +236,7 @@ function onMouseOut(e) {}
 function keydown(e) {  
     let press = direction(e);
     updateKeyArray(e, press, true);
-    movePlayer(player1)
+    movePlayer(player1);
     // player1.moving = true;
 }
 function updateKeyArray(e, press, value) {

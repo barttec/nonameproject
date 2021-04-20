@@ -86,7 +86,6 @@ socket.on("dcbruh", data => {
         const player = playerarray[index];
         if(data.rooms[0] == player.id) {
             console.log('nigga');
-            
             playerarray.splice(index,1);// index items to splice
         } else {
             console.log(data);
@@ -125,7 +124,7 @@ function handleplayermove(data) {
             }
         });
         if(playerarray.length > 200){
-            playerarray = playerarray.splice(0, 2);
+            playerarray = playerarray.splice(0, 150);
         }
     }
 }
