@@ -12,3 +12,8 @@
  params: [width, height]
 }
 ```
+
+
+# Priority list
+* clean up codebase
+* simply codebase

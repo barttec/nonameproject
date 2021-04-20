@@ -1,0 +1,271 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	"Print to console": {
+		"scope": "javascript,typescript",
+		"prefix": "log",
+		"body": [
+			"console.log('$1');",
+			"$2"
+		],
+		"description": "Log output to console"
+	},
+	"Express Start": {
+		"scope": "javascript,typescript",
+		"prefix": "express",
+		"body": [
+			"const express = require('express')",
+			"const app = express()",
+			"const port = 8000",			
+			"app.get('/', (req, res) => {",
+			"  let data = 'helloworld';"
+			"  res.send(data)",
+			"})",
+			"app.listen(port, () => {",
+			"  console.log(`Example app listening at http://localhost:` + port)",
+			"})",
+			"$0"
+		],
+		"description": "basic express app"
+	},
+	"file read async": {
+		"scope": "javascript,typescript",
+		"prefix": "asyncreadfile",
+		"body": [
+			"fs = require('fs')",
+			"fs.readFile('index.html$0', 'utf8', function (err,data) {",
+  			"	if (err) {",
+    		"	return console.log(err);",
+  			"	}",
+  			"	console.log(data);",
+			"});"
+		],
+		"description": "Read file in js"
+	},
+	"file read async": {
+		"scope": "javascript,typescript",
+		"prefix": "readfile",
+		"body": [
+			"//let fs = require('fs')",
+  			"let data = fs.readFileSync('./index.html$0', {encoding:'utf8', flag:'r'});"
+		],
+		"description": "Read file SYNC in js"
+	},
+	"load js sync": {
+		"scope": "html,javascript",
+		"prefix": [
+			"<scri",
+			"script load"
+		],
+		"body": [
+			"<script src=\"$0\" async></script>",
+		],
+		"description": "basic js load"
+	},
+	"html start": {
+		"scope": "html,javascript",
+		"prefix": [
+			"html start",
+			"<html>",
+			"html"
+		],
+		"body": [
+			"<!DOCTYPE html>",
+			"<html>",
+			" <head>",
+			"	<meta charset=\"utf-8\">",
+			"	<title>Untitled</title>",
+			"	<meta name=\"description\" content=\"This is an example of a meta description.\">",
+			"	<link rel=\"stylesheet\" type=\"text/css\" href=\"theme.css\">",
+			"	<!--[if lt IE 9]>",
+			"	<script src=\"http://html5shim.googlecode.com/svn/trunk/html5.js\"></script>",
+			"	<![endif]-->",
+			"  </head>",
+			"  <body>",
+			"		$0",
+			"  </body>",
+			"</html>"
+		],
+		"description": "basic html load"
+	}
+	"load js sync": {
+		"scope": "html,javascript",
+		"prefix": [
+			"<scri",
+			"script load"
+		],
+		"body": [
+			"<script src=\"$0\" async></script>",
+		],
+		"description": "basic js load"
+	},
+
+
+	"write js file": {
+		"scope": "html,javascript",
+		"prefix": [
+			"write file",
+			"writefile",
+			"write"
+		],
+		"body": [
+			"var fs = require(\"fs\");",
+			"fs.writeFile('output'+(new Date()).getTime().toString()+'.txt', '$0', function(err) {",
+			"	if (err) {",
+			"	  	return console.error(err);",
+			"	}",	
+			"	console.log(\"Data written successfully!\");",
+			"}",
+		],
+		"description": "basic js write"
+	},
+	"Request in js": {
+		"scope": "html,javascript",
+		"prefix": [
+			"request",
+			"get",
+			"post"
+		],
+		"body": [
+			"const request = require('request');",
+			"request('$0', { json: true }, (err, res, body) => {",
+			"	if (err) {",
+			"	  	return console.error(err);",
+			"	}",	
+			"	console.log(body.id);",
+			"	console.log(body.title);",
+			"});",
+		],
+		"description": "basic js write"
+	},
+	"static server express": {
+		"scope": "html,javascript",
+		"prefix": [
+			"express Static",
+			"Static",
+			"server"
+		],
+		"body": [
+			"const express = require('express');",
+			"const app = express();",
+			"app.use(express.static('public')); // this serves all files from the -public- directory",
+			"const port = process.env.PORT || 8000; // this is important for heroku",
+			"app.listen(port, () => {",
+			"  console.log(`Example app listening at http://localhost:` + port);",
+			"});"
+		],
+		"description": "serve static files with express"
+	},
+	"pick random item from array": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"random",
+			"item",
+			"arrayRandom"
+		],
+		"body": [
+			"var things = ['Rock', 'Paper', 'Scissor', 'Moose', 'Raindeer'];",
+			"var thing = things[Math.floor(Math.random()*things.length)];",
+			"alert('The computer chose:' + thing);"
+		],
+		"description": "pick random item from array"
+	},
+	"set timeout": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"set",
+			"timeout",
+			"wait",
+			"sleep"
+		],
+		"body": [
+			"setTimeout(function(){ alert('Hello'); }, 3000);"
+		],
+		"description": "wait before executing code"
+	},
+	"socketio server": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"socket",
+			"websocket",
+			"server",
+			"socketio"
+		],
+		"body": [
+			"const app = require('express')();",
+			"const server = require('http').createServer(app);",
+			"const io = require('socket.io')(server);",
+			"const port = process.env.PORT || 3000;",
+			"io.on('connection', client => {",
+			"	console.log('someone connected');",
+			"	  client.on('thisisacustomeventsendbyuser', data => {",
+			"		console.log('client says: ',data);",
+			"		client.emit('echo', data)",
+			"	});",
+			"	  client.on('disconnect', () => {",
+			"		socket.emit('logout', {",
+			"			username: socket.username,",
+			"			reason: 'yousuckforloogingout'",
+			"		});",
+			"		socket.broadcast.emit('logout', {",
+			"			username: socket.username,",
+			"			reason: 'thisboiloggedouteveryone,makefunof him'",
+			"		});",
+			"	});",
+			"});",
+			"server.listen(port);",
+			"console.log('server started at',port);"
+		],
+		"description": "Networking in js, socketio best lib"
+	},
+	"socketio-client": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"client-code",
+			"websocket",
+			"socketio-client"
+		],
+		"body": [
+			"const io = require('socket.io-client');",
+			"const socket = io('http://localhost:3000');/*the socket server will be determined forom the same domain via window.location object if not io('https://server-domain.com'); you can also specifiy namespaces to connect to and use wws: or https: via io('/admin');*/",
+			"socket.on('connect', (data) => {",
+    		"	console.log('we in');",
+    		"	socket.emit('thisisacustomeventsendbyuser', 'this is sent by user');",
+			"});",
+			"socket.on('echo', (data) => {",
+    		"	console.log('server says:', data);",
+			"});"
+		],
+		"description": "Networking in js, socketio best lib"
+	},
+	"console log sucess": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"log-sucess",
+			"sucess",
+			"print"
+		],
+		"body": [
+			"console.log('%c$0', 'color: White ;background-color: green;padding: 5px;');"
+		],
+		"description": "sucess log"
+	},
+	"console log error": {
+		"scope": "html,javascript,node",
+		"prefix": [
+			"log-error",
+			"fail",
+			"failure",
+			"errror-log"
+		],
+		"body": [
+			"console.log('%c$0', 'color: White ;background-color: red;padding: 5px;');"
+		],
+		"description": "eror log"
+	}
+});

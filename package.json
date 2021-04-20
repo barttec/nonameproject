@@ -1,0 +1,26 @@
+{
+  "name": "nonameproject",
+  "version": "0.0.1",
+  "description": "A client for a server type dohikie we making with nick",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "marked": "^2.0.0",
+    "sanitize-html": "^2.3.3",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1"
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barttec/Electrolyser.git"
+  },
+  "author": "me",
+  "license": "ISC"
+}
