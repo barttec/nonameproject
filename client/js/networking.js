@@ -146,4 +146,4 @@ setInterval(() => {
         }, hardoften);
     }
 }, softoften);
-setInterval(() => {    console.log(hard);}, 100);
+// setInterval(() => {    console.log(hard);}, 100);
