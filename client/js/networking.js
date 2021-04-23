@@ -151,9 +151,13 @@ setInterval(() => {
 function joinRoomFromUrl() {
     let urlString = String(window.location);
     let clean = DOMPurify.sanitize(urlString);
-    let params = clean.split("/?")[1].split("&")
-    let username = params[0].split("username=")[1];
-    let roomname = params[1].split("roomname=")[1];
+    try {
+        let params = clean.split("/?")[1].split("&")
+    } catch(e) {
+        return e
+    }
+    username = params[0].split("username=")[1];
+    roomname = params[1].split("roomname=")[1];
     setusername(username);
     joinroom(roomname);
 }
