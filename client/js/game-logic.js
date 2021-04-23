@@ -137,6 +137,7 @@ function getRandomColor() {
 }
 // Initialize the game
 function init() {
+    // canvas.style.top = client
     // Add mouse events
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", onMouseDown);
@@ -369,7 +370,7 @@ function movePlayer(player){
     }
 
 }
-``
+
 function drawLine(startx, starty, endx, endy) {
     context.beginPath();
     context.moveTo(startx, starty);
@@ -377,3 +378,5 @@ function drawLine(startx, starty, endx, endy) {
     context.stroke();
     context.closePath(); 
 }
+
+window.onload = init;
