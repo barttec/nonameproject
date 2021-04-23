@@ -147,3 +147,13 @@ setInterval(() => {
     }
 }, softoften);
 // setInterval(() => {    console.log(hard);}, 100);
+
+function joinRoomFromUrl() {
+    let urlString = String(window.location);
+    let clean = DOMPurify.sanitize(urlString);
+    let params = clean.split("/?")[1].split("&")
+    let username = params[0].split("username=")[1];
+    let roomname = params[1].split("roomname=")[1];
+    setusername(username);
+    joinroom(roomname);
+}

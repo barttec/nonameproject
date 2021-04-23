@@ -212,7 +212,7 @@ function drawFrame() {
     textOrder++;
     for (let index = 0; index < clientarray.length; index++) {
         const client = clientarray[index];
-        drawText("#000000", 0, client, 20, 15+(textOrder)*15)
+        drawText("#000000", client, 20, 15+(textOrder)*15)
         textOrder++
     }
 
@@ -378,5 +378,3 @@ function drawLine(startx, starty, endx, endy) {
     context.stroke();
     context.closePath(); 
 }
-
-window.onload = init;
