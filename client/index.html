@@ -8,10 +8,11 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="libaries\purify.js"></script>
   </head>
-  <body>
-    <div style="display: flex;justify-content: center;">
-      <canvas id="viewport" width="640" height="480"></canvas>
+  <body onload="joinRoomFromUrl();init();">
+    <div class="gamecontainer">
+      <canvas id="viewport" width="640px" height="480px"></canvas>
     </div>
     <!-- 
     <div style="display: flex;justify-content: center;">

@@ -29,7 +29,8 @@ var player1 = {
     },
     decelaration: 0.97,
     speed: 1,
-    keyarray: [false,false,false,false]// w a s d
+    keyarray: [false,false,false,false],// w a s d
+    recoil: 0.5
 }
 
 var clientarray = [];
@@ -42,6 +43,56 @@ var fps = 0;
  
 var playerarray = [player1];
 
+
+// var bulletarray = [];
+// function fire(player) {
+//     if(player.velocity.x > 0) {
+//         player.velocity.x -= player.recoil*Math.random();
+//     } else {
+//         player.velocity.x += player.recoil*Math.random();
+//     }
+//     if(player.velocity.y > 0) {
+//         player.velocity.y -= player.recoil*Math.random();
+//     } else {
+//         player.velocity.y += player.recoil*Math.random();
+//     }
+
+//     let velocity = JSON.parse(JSON.stringify(player.velocity));
+    
+
+//     var bullet = {
+//         color: JSON.parse(JSON.stringify(player.color)),
+//         x: JSON.parse(JSON.stringify(player.x)),
+//         y: JSON.parse(JSON.stringify(player.y)),
+//         velocity: velocity,
+//         size: JSON.parse(JSON.stringify(player.size))
+//     }
+//     bulletarray.push(bullet);
+// }
+
+// function moveBullets() {
+//     for (let index = 0; index < bulletarray.length; index++) {
+//         let bullet = bulletarray[index];
+        
+//         let x1 = (bullet.x-bullet.size);
+//         let y1 = (bullet.y-bullet.size);
+//         let dx = bullet.size;
+//         let dy = bullet.size;
+//         drawRectangle(bullet.color, x1, y1, dx, dy)
+//         // drawText(bullet.color,bullet.x+" "+bullet.y, bullet.x + 30, bullet.y + 30)
+
+//         bullet.x = Math.floor((bullet.x + bullet.velocity.x)*100)/100;
+//         bullet.y = Math.floor((bullet.y + bullet.velocity.y)*100)/100;
+
+//         // delete on corner
+//         if(bullet.x > canvas.width || bullet.y > canvas.height || bullet.x < 0 || bullet.y < 0){
+//             console.log("destroy");
+            
+//             bulletarray.splice(index,1);
+//         }
+//     };
+// }
+ 
 function addplayer(id, color, x, y, name, ) {
     if(color == undefined) {
         color = getRandomColor();
@@ -71,7 +122,8 @@ function addplayer(id, color, x, y, name, ) {
         },
         decelaration: 0.97,
         speed: 1,
-        keyarray: [false,false,false,false]// w a s d
+        keyarray: [false,false,false,false],// w a s d
+        recoil: 0.5
     }
     playerarray.push(playerobject);
 }
@@ -85,6 +137,7 @@ function getRandomColor() {
 }
 // Initialize the game
 function init() {
+    // canvas.style.top = client
     // Add mouse events
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", onMouseDown);
@@ -145,17 +198,37 @@ function drawFrame() {
     drawRectangle("#d0d0d0", 0, 0, canvas.width, canvas.height);
     drawRectangle("#e8eaec" , 1, 1, canvas.width-2, canvas.height-2);
 
+    drawPlayers();
+    // moveBullets();
+    //draw fps
+    drawFps();   
+    
+    let textOrder = 1;
+    drawText("#000000", "roomname: ", 13, 15+(textOrder)*15);
+    textOrder++;
+    drawText("#000000", roomname, 20, 15+(textOrder)*15)
+    textOrder++;
+    drawText("#000000", "players:", 13, 15+(textOrder)*15)
+    textOrder++;
+    for (let index = 0; index < clientarray.length; index++) {
+        const client = clientarray[index];
+        drawText("#000000", client, 20, 15+(textOrder)*15)
+        textOrder++
+    }
+
+}
+
+function drawPlayers() {
     playerarray.forEach(player => {
         let yoffset = 20;
         let xoffset = player.name.length * 4.25; // perfect value
-        drawText("#000000", "12px Verdana", player.name, player.x-xoffset, player.y-yoffset);
+        drawText("#000000", player.name, player.x-xoffset, player.y-yoffset);
         let x1 = (player.x-player.size);
         let y1 = (player.y-player.size);
         let dx = player.size;
         let dy = player.size;
         drawRectangle(player.color, x1, y1, dx, dy)        
-    });
-    playerarray.forEach(player => {
+        
         // change player position
         player.x = player.x + player.velocity.x;
         player.y = player.y + player.velocity.y;    
@@ -178,7 +251,7 @@ function drawFrame() {
         //makes the movement presistent
         movePlayer(player);
 
-        //make the game loop around
+        // make them loop around
         if(player.x > canvas.width){
             player.x = 0;
         }
@@ -192,21 +265,6 @@ function drawFrame() {
             player.y = canvas.height;
         }
     });
-    //draw fps
-    drawFps();   
-    
-    let textOrder = 1;
-    drawText("#000000", "12px Verdana", "roomname: ", 13, 15+(textOrder)*15);
-    textOrder++;
-    drawText("#000000", "12px Verdana", roomname, 20, 15+(textOrder)*15)
-    textOrder++;
-    drawText("#000000", "12px Verdana", "players:", 13, 15+(textOrder)*15)
-    textOrder++;
-    for (let index = 0; index < clientarray.length; index++) {
-        const client = clientarray[index];
-        drawText("#000000", "12px Verdana", client, 20, 15+(textOrder)*15)
-        textOrder++
-    }
 }
 function drawRectangle(color, x1, y1, dx, dy) {       
     context.fillStyle = color;
@@ -218,18 +276,16 @@ function drawFps() {
     context.font = "12px Verdana";
     context.fillText("fps: " + fps, 13, 15);
 }
-function drawText(color, font, text, x, y) {
+function drawText(color, text, x, y) {
+    let font = "12px Verdana";
     context.fillStyle = color;
     context.font = font;
     context.fillText(text, x, y);
 }
-// Event handlers
 function onMouseMove(e) {}
 function onMouseDown(e) {
-    player1.velocity.x = 0;
-    player1.velocity.y = 0;
-    player1.x = e.layerX;
-    player1.y = e.layerY;
+    // console.log(e)
+    // fire(player1);
 }
 function onMouseUp(e) {}
 function onMouseOut(e) {}
@@ -265,7 +321,7 @@ function updateKeyArray(e, press, value) {
 }
 let lastsend = new Date().getTime();
 function multiplayermove() {
-    console.log('server get fucked', new Date().getTime()-lastsend);
+    // console.log('server get fucked', new Date().getTime()-lastsend);
     lastsend = new Date().getTime();
     socket.emit("playermove", player1)
 }
@@ -315,9 +371,10 @@ function movePlayer(player){
 
 }
 
-window.onload = function() {
-    init();
-    joinroom('bruh')
-    roomusers();
-    setusername();
+function drawLine(startx, starty, endx, endy) {
+    context.beginPath();
+    context.moveTo(startx, starty);
+    context.lineTo(endx, endy);
+    context.stroke();
+    context.closePath(); 
 }
