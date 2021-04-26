@@ -152,12 +152,13 @@ function joinRoomFromUrl() {
     let urlString = String(window.location);
     let clean = DOMPurify.sanitize(urlString);
     try {
-        let params = clean.split("/?")[1].split("&")
+        let params = clean.split("/?")[1].split("&");
+        username = params[0].split("username=")[1];
+        roomname = params[1].split("roomname=")[1];
     } catch(e) {
-        return e
+        username = sillyname()
+        roomname = "bruh";
     }
-    username = params[0].split("username=")[1];
-    roomname = params[1].split("roomname=")[1];
     setusername(username);
     joinroom(roomname);
 }
