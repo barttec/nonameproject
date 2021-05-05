@@ -1,8 +1,9 @@
 // The function gets called when the window is fully loaded
 // Get the canvas and context
+
+
 var canvas = document.getElementById("viewport"); 
 var context = canvas.getContext("2d");
- 
 
 let randx = Math.floor(Math.random()*(canvas.width/4));
 let randy = Math.floor(Math.random()*(canvas.height/4));
@@ -13,13 +14,14 @@ if(Math.floor(Math.random()*2)){
     randx = randx * -1;
 }
 
+const GLOBALSCALE = 64;
 
 var player1 = {
     id: socket.id,
     color: getRandomColor(),
     x: (canvas.width/2)+randx,
     y: (canvas.height/2)+randy,
-    size: 16,
+    size: GLOBALSCALE,
     name: "player1",
     velocity: {
         x: 0,
@@ -30,7 +32,8 @@ var player1 = {
     decelaration: 0.97,
     speed: 1,
     keyarray: [false,false,false,false],// w a s d
-    recoil: 0.5
+    recoil: 0.5,
+    inColision: false
 }
 
 var clientarray = [];
@@ -42,64 +45,14 @@ var framecount = 0;
 var fps = 0;
  
 var playerarray = [player1];
-
-
-// var bulletarray = [];
-// function fire(player) {
-//     if(player.velocity.x > 0) {
-//         player.velocity.x -= player.recoil*Math.random();
-//     } else {
-//         player.velocity.x += player.recoil*Math.random();
-//     }
-//     if(player.velocity.y > 0) {
-//         player.velocity.y -= player.recoil*Math.random();
-//     } else {
-//         player.velocity.y += player.recoil*Math.random();
-//     }
-
-//     let velocity = JSON.parse(JSON.stringify(player.velocity));
-    
-
-//     var bullet = {
-//         color: JSON.parse(JSON.stringify(player.color)),
-//         x: JSON.parse(JSON.stringify(player.x)),
-//         y: JSON.parse(JSON.stringify(player.y)),
-//         velocity: velocity,
-//         size: JSON.parse(JSON.stringify(player.size))
-//     }
-//     bulletarray.push(bullet);
-// }
-
-// function moveBullets() {
-//     for (let index = 0; index < bulletarray.length; index++) {
-//         let bullet = bulletarray[index];
-        
-//         let x1 = (bullet.x-bullet.size);
-//         let y1 = (bullet.y-bullet.size);
-//         let dx = bullet.size;
-//         let dy = bullet.size;
-//         drawRectangle(bullet.color, x1, y1, dx, dy)
-//         // drawText(bullet.color,bullet.x+" "+bullet.y, bullet.x + 30, bullet.y + 30)
-
-//         bullet.x = Math.floor((bullet.x + bullet.velocity.x)*100)/100;
-//         bullet.y = Math.floor((bullet.y + bullet.velocity.y)*100)/100;
-
-//         // delete on corner
-//         if(bullet.x > canvas.width || bullet.y > canvas.height || bullet.x < 0 || bullet.y < 0){
-//             console.log("destroy");
-            
-//             bulletarray.splice(index,1);
-//         }
-//     };
-// }
  
 function addplayer(id, color, x, y, name, ) {
     if(color == undefined) {
         color = getRandomColor();
     }
     if(x == undefined || y == undefined) {
-        x = 3 * 16;
-        y = 3 * 16;
+        x = 3 * GLOBALSCALE;
+        y = 3 * GLOBALSCALE;
     }
     if(name == undefined) {
         name = "machine";
@@ -112,7 +65,7 @@ function addplayer(id, color, x, y, name, ) {
         color: color,
         x: x,
         y: y,
-        size: 16,
+        size: GLOBALSCALE,
         name: name,
         velocity: {
             x: 0,
@@ -123,17 +76,10 @@ function addplayer(id, color, x, y, name, ) {
         decelaration: 0.97,
         speed: 1,
         keyarray: [false,false,false,false],// w a s d
-        recoil: 0.5
+        recoil: 0.5,
+        inColision: false
     }
     playerarray.push(playerobject);
-}
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
 }
 // Initialize the game
 function init() {
@@ -161,7 +107,6 @@ function main(tframe) {
 function update(tframe) {
     var dt = (tframe - lastframe) / 1000;
     lastframe = tframe;
- 
     // Update the fps counter
     updateFps(dt);
 }
@@ -196,7 +141,7 @@ function render() {
 function drawFrame() {
     // Draw background and a border
     drawRectangle("#d0d0d0", 0, 0, canvas.width, canvas.height);
-    drawRectangle("#e8eaec" , 1, 1, canvas.width-2, canvas.height-2);
+    // drawRectangle("#e8eaec" , 1, 1, canvas.width-2, canvas.height-2);
 
     drawPlayers();
     // moveBullets();
@@ -222,13 +167,14 @@ function drawPlayers() {
     playerarray.forEach(player => {
         let yoffset = 20;
         let xoffset = player.name.length * 4.25; // perfect value
-        drawText("#000000", player.name, player.x-xoffset, player.y-yoffset);
+        // drawText("#000000", player.name, player.x-xoffset, player.y-yoffset);
         let x1 = (player.x-player.size);
         let y1 = (player.y-player.size);
         let dx = player.size;
         let dy = player.size;
-        drawRectangle(player.color, x1, y1, dx, dy)        
-        
+        renderParticles();
+        drawRectangle(player.color, x1, y1, dx, dy)        ;
+        drawEmptyRectangle(x1, y1, dx, dy);
         // change player position
         player.x = player.x + player.velocity.x;
         player.y = player.y + player.velocity.y;    
@@ -246,11 +192,30 @@ function drawPlayers() {
         if(count == 0) {
             player.velocity.x = Math.round((player.velocity.x * (player.decelaration*player.decelaration))*1000)/1000;
             player.velocity.y = Math.round((player.velocity.y * (player.decelaration*player.decelaration))*1000)/1000;    
+            if(getMagnitudeVelocity(player) > 0) {
+                goParticles(player)
+            }
+        } else {
+            moveParticles(player);
         }
 
         //makes the movement presistent
         movePlayer(player);
-
+        playerarray.forEach(player2 => {
+            if(player2 != player) {
+                var samplerates = Math.round(getMagnitudeVelocity(player));
+                if(nextcolision(player, player2, samplerates)) {
+                    if(!player2.inColision) {
+                        playerHit(player2,player)
+                    }
+                    player2.inColision = true;   
+                    console.log(player2.inColision);
+                    
+                } else {
+                    player2.inColision = false;
+                }
+            }
+        });
         // make them loop around
         if(player.x > canvas.width){
             player.x = 0;
@@ -265,6 +230,97 @@ function drawPlayers() {
             player.y = canvas.height;
         }
     });
+}
+// var player = player1;
+// setInterval(function(){addParticles(player.x-player.size/2,player.y-player.size/2,10,100, player.velocity.x, player.velocity.y)}, 50)
+function moveParticles(player){
+    addParticles(player, player.x-player.size/2,player.y-player.size/2,Math.floor(getMagnitudeVelocity(player)),player.size, -player.velocity.x*0.2, -player.velocity.y*0.2)
+}
+function goParticles(player) {
+    addParticles(player, player.x-player.size/2,player.y-player.size/2,5,player.size, -player.velocity.x*0.2, -player.velocity.y*0.2)
+}
+let semiRandomIteratiorVariable = 0;
+function getSemiRandomColor(selector, maxselector) {
+    if(semiRandomIteratiorVariable >= 4) {
+      semiRandomIteratiorVariable = 0;
+    } else {
+      semiRandomIteratiorVariable++;
+    }
+    let toxicSprings = ["#b3e244", "#53bbe0", "#6a6b4d", "#b3dd52", "#d4f850"];
+    let retroWaves = ["#fd7eb0", "#fba9ee", "#68faff", "#ff64c9", "#6d02c3"];
+    let Diagperm = ["#ff8152", "#d1471e", "#ff735d", "#ff3b0e", "#c50601"];
+    let Glaucous = ["#6082b6", "#799ad0", "#93b6f0", "#b2d2ff", "#d1f0ff"];
+    if(selector >= (3*maxselector)/4) {  
+      return toxicSprings[semiRandomIteratiorVariable]
+    } else if(selector >= (2*maxselector)/4) {
+      return retroWaves[semiRandomIteratiorVariable]
+    } else if(selector >= (1*maxselector)/4) {
+      return Diagperm[semiRandomIteratiorVariable]
+    } else {
+      return Glaucous[semiRandomIteratiorVariable]
+    }  
+  }
+var particlearray = [];
+function addParticles(player, x, y, ammount, lifetime, dx, dy){
+    for (let index = 0; index < ammount; index++) {
+        // if(dx == 0) {
+        //     dx = 10*getoneminusone();
+        // }
+        // if(dy == 0) {
+        //     dy = 10*getoneminusone();
+        // }
+        let rd = Math.random();
+        // dx = dx*Math.random();
+        // dy = dy*Math.random();
+        let particle = {
+            x: x,
+            y: y,
+            dx: dx,
+            dy: dy,
+            color: colorsplit(player.color,25),//getSemiRandomColor(1,3),
+            size: GLOBALSCALE * Math.random(),
+            lifetime: lifetime, // frames
+            TotalLifetime: lifetime
+        }
+        particlearray.push(particle);
+    }
+}
+function getoneminusone() {
+    return Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1)
+}
+function drawEmptyRectangle(x1, y1, dx, dy) {
+    // Filled triangle
+    context.beginPath();
+    context.moveTo(x1,y1);
+    context.lineTo(x1+dy,y1);
+    context.lineTo(x1+dy,y1+dx);
+    context.lineTo(x1,y1+dx);
+    context.lineTo(x1,y1); 
+    context.lineTo(x1+dx,y1);   
+    context.strokeStyle = "#d0d0d0"
+    context.lineWidth = 1.5;
+    context.stroke();
+    context.closePath();
+}
+function renderParticles() {
+    for (let index = 0; index < particlearray.length; index++) {
+        var particle = particlearray[index];
+        if(particle.lifetime > 0){
+            particle.x += particle.dx;
+            particle.y += particle.dy;
+            drawRectangle(particle.color, (particle.x-particle.size/2), (particle.y-particle.size/2), particle.size, particle.size)
+
+            particle.lifetime -= 1;
+            particle.size = particle.size * (particle.lifetime/particle.TotalLifetime)
+
+            // kill particles off screen
+            if(particle.x > canvas.width || particle.y > canvas.height || particle.x < 0 || particle.y < 0){
+                particle.lifetime = 0;
+            }
+        } else {
+            particlearray.splice(index, 1);
+        }
+    }
 }
 function drawRectangle(color, x1, y1, dx, dy) {       
     context.fillStyle = color;
@@ -378,3 +434,60 @@ function drawLine(startx, starty, endx, endy) {
     context.stroke();
     context.closePath(); 
 }
+function colider(rect1, rect2) {
+    let colision = false;
+    if (rect1.x < rect2.x + rect2.size &&
+        rect1.x + rect1.size > rect2.x &&
+        rect1.y < rect2.y + rect2.size &&
+        rect1.y + rect1.size > rect2.y) {
+        colision = true;
+     }
+     return colision
+}
+
+function KillPlayer(playerKilled) {
+    for (let index = 0; index < playerarray.length; index++) {
+        const player = playerarray[index];
+        if(playerKilled == player) {
+            playerarray.splice(index, 1);    
+        }
+    }
+    // console.log(playerKilled.name, " is kill");
+    // playerKilled.size = 32;
+}
+function nextcolision(movingPlayerActual,stationaryPlayerActual,samplerate) {
+    let movingPlayer = JSON.parse(JSON.stringify(movingPlayerActual))
+    let stationaryPlayer = JSON.parse(JSON.stringify(stationaryPlayerActual))
+    
+    let dx = (movingPlayer.velocity.x/samplerate)
+    let dy = (movingPlayer.velocity.y/samplerate)
+
+    let colision = false;
+    for (let index = 0; index <= samplerate; index++) {
+        
+        let fakeplayer = {x: movingPlayer.x,y: movingPlayer.y, size: movingPlayer.size};
+
+        fakeplayer.x = fakeplayer.x + (dx*index);
+        fakeplayer.y = fakeplayer.y + (dy*index);
+
+        drawRectangle("#aeaeae", fakeplayer.x-fakeplayer.size, fakeplayer.y-fakeplayer.size, fakeplayer.size,fakeplayer.size);
+        if(colider(fakeplayer, stationaryPlayer)){
+            colision = true;
+        }        
+    }
+    return colision;
+}
+let ammount = 100;
+function playerHit(playerHit, playerHitting) {
+    if(playerHit.size <= 5){
+        KillPlayer(playerHit);
+    } else {
+        let vel = getMagnitudeVelocity(playerHitting);
+        playerHit.size -= vel;
+        if(playerHit.size <= 0) {
+            playerHit.size = 3;
+        }   
+        addParticles(playerHit,playerHit.x,playerHit.y,ammount,100, Math.pow(playerHitting.velocity.x,3), Math.pow(playerHitting.velocity.y,3))
+    }
+}
+joinroom("bruh")
