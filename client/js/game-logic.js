@@ -1,142 +1,3 @@
-// The function gets called when the window is fully loaded
-// Get the canvas and context
-
-
-var canvas = document.getElementById("viewport"); 
-var context = canvas.getContext("2d");
-
-let randx = Math.floor(Math.random()*(canvas.width/4));
-let randy = Math.floor(Math.random()*(canvas.height/4));
-if(Math.floor(Math.random()*2)){
-    randy = randy * -1;
-}
-if(Math.floor(Math.random()*2)){
-    randx = randx * -1;
-}
-
-const GLOBALSCALE = 64;
-
-var player1 = {
-    id: socket.id,
-    color: getRandomColor(),
-    x: (canvas.width/2)+randx,
-    y: (canvas.height/2)+randy,
-    size: GLOBALSCALE,
-    name: "player1",
-    velocity: {
-        x: 0,
-        y: 0,
-        dx: 0,
-        dy: 0
-    },
-    decelaration: 0.97,
-    speed: 1,
-    keyarray: [false,false,false,false],// w a s d
-    recoil: 0.5,
-    inColision: false
-}
-
-var clientarray = [];
-
-// Timing and frames per second
-var lastframe = 0;
-var fpstime = 0;
-var framecount = 0;
-var fps = 0;
- 
-var playerarray = [player1];
- 
-function addplayer(id, color, x, y, name, ) {
-    if(color == undefined) {
-        color = getRandomColor();
-    }
-    if(x == undefined || y == undefined) {
-        x = 3 * GLOBALSCALE;
-        y = 3 * GLOBALSCALE;
-    }
-    if(name == undefined) {
-        name = "machine";
-    }
-    if(id == undefined) {
-        throw console.error('fuck this shit we need an id');
-    }
-    let playerobject = {
-        id: id,
-        color: color,
-        x: x,
-        y: y,
-        size: GLOBALSCALE,
-        name: name,
-        velocity: {
-            x: 0,
-            y: 0,
-            dx: 0,
-            dy: 0
-        },
-        decelaration: 0.97,
-        speed: 1,
-        keyarray: [false,false,false,false],// w a s d
-        recoil: 0.5,
-        inColision: false
-    }
-    playerarray.push(playerobject);
-}
-// Initialize the game
-function init() {
-    // canvas.style.top = client
-    // Add mouse events
-    canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mousedown", onMouseDown);
-    canvas.addEventListener("mouseup", onMouseUp);
-    canvas.addEventListener("mouseout", onMouseOut);
-    document.addEventListener('keydown', keydown);
-    document.addEventListener('keyup', keyup);
-    // Enter main loop
-    main(0);
-}
-// Main loop
-function main(tframe) {
-    // Request animation frames
-    window.requestAnimationFrame(main);
- 
-    // Update and render the game
-    update(tframe);
-    render();
-}
-// Update the game state
-function update(tframe) {
-    var dt = (tframe - lastframe) / 1000;
-    lastframe = tframe;
-    // Update the fps counter
-    updateFps(dt);
-}
-function updateFps(dt) {    
-    if (fpstime > 0.25) {
-        // Calculate fps
-        fps = Math.round(framecount / fpstime);
- 
-        // Reset time and framecount
-        fpstime = 0;
-        framecount = 0;
-    }
- 
-    // Increase time and framecount
-    fpstime += dt;
-    framecount++;
-}
-// Get the mouse position
-function getMousePos(canvas, e) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        x: Math.round((e.clientX - rect.left)/(rect.right - rect.left)*canvas.width),
-        y: Math.round((e.clientY - rect.top)/(rect.bottom - rect.top)*canvas.height)
-    };
-}
-// Render the game
-function render() {
-    // Draw the frame
-    drawFrame();
-}
 // Draw a frame with a border
 function drawFrame() {
     // Draw background and a border
@@ -160,7 +21,6 @@ function drawFrame() {
         drawText("#000000", client, 20, 15+(textOrder)*15)
         textOrder++
     }
-
 }
 
 function drawPlayers() {
@@ -239,68 +99,8 @@ function moveParticles(player){
 function goParticles(player) {
     addParticles(player, player.x-player.size/2,player.y-player.size/2,5,player.size, -player.velocity.x*0.2, -player.velocity.y*0.2)
 }
-let semiRandomIteratiorVariable = 0;
-function getSemiRandomColor(selector, maxselector) {
-    if(semiRandomIteratiorVariable >= 4) {
-      semiRandomIteratiorVariable = 0;
-    } else {
-      semiRandomIteratiorVariable++;
-    }
-    let toxicSprings = ["#b3e244", "#53bbe0", "#6a6b4d", "#b3dd52", "#d4f850"];
-    let retroWaves = ["#fd7eb0", "#fba9ee", "#68faff", "#ff64c9", "#6d02c3"];
-    let Diagperm = ["#ff8152", "#d1471e", "#ff735d", "#ff3b0e", "#c50601"];
-    let Glaucous = ["#6082b6", "#799ad0", "#93b6f0", "#b2d2ff", "#d1f0ff"];
-    if(selector >= (3*maxselector)/4) {  
-      return toxicSprings[semiRandomIteratiorVariable]
-    } else if(selector >= (2*maxselector)/4) {
-      return retroWaves[semiRandomIteratiorVariable]
-    } else if(selector >= (1*maxselector)/4) {
-      return Diagperm[semiRandomIteratiorVariable]
-    } else {
-      return Glaucous[semiRandomIteratiorVariable]
-    }  
-  }
-var particlearray = [];
-function addParticles(player, x, y, ammount, lifetime, dx, dy){
-    for (let index = 0; index < ammount; index++) {
-        // if(dx == 0) {
-        //     dx = 10*getoneminusone();
-        // }
-        // if(dy == 0) {
-        //     dy = 10*getoneminusone();
-        // }
-        let rd = Math.random();
-        // dx = dx*Math.random();
-        // dy = dy*Math.random();
-        let particle = {
-            x: x,
-            y: y,
-            dx: dx,
-            dy: dy,
-            color: colorsplit(player.color,25),//getSemiRandomColor(1,3),
-            size: GLOBALSCALE * Math.random(),
-            lifetime: lifetime, // frames
-            TotalLifetime: lifetime
-        }
-        particlearray.push(particle);
-    }
-}
 function getoneminusone() {
     return Math.ceil(Math.random() * 1) * (Math.round(Math.random()) ? 1 : -1)
-}
-function drawEmptyRectangle(x1, y1, dx, dy) {
-    // Filled triangle
-    context.beginPath();
-    context.moveTo(x1,y1);
-    context.lineTo(x1+dy,y1);
-    context.lineTo(x1+dy,y1+dx);
-    context.lineTo(x1,y1+dx);
-    context.lineTo(x1,y1); 
-    context.lineTo(x1+dx,y1);   
-    context.strokeStyle = "#d0d0d0"
-    context.lineWidth = 1.5;
-    context.stroke();
-    context.closePath();
 }
 function renderParticles() {
     for (let index = 0; index < particlearray.length; index++) {
@@ -425,24 +225,6 @@ function movePlayer(player){
         }
     }
 
-}
-
-function drawLine(startx, starty, endx, endy) {
-    context.beginPath();
-    context.moveTo(startx, starty);
-    context.lineTo(endx, endy);
-    context.stroke();
-    context.closePath(); 
-}
-function colider(rect1, rect2) {
-    let colision = false;
-    if (rect1.x < rect2.x + rect2.size &&
-        rect1.x + rect1.size > rect2.x &&
-        rect1.y < rect2.y + rect2.size &&
-        rect1.y + rect1.size > rect2.y) {
-        colision = true;
-     }
-     return colision
 }
 
 function KillPlayer(playerKilled) {
