@@ -1,7 +1,6 @@
 // The function gets called when the window is fully loaded
 // Get the canvas and context
-var canvas = document.getElementById("viewport"); 
-var context = canvas.getContext("2d");
+
 
 var player = {
     x: 100,
