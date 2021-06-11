@@ -1,0 +1,765 @@
+{
+  "firstLayout": "",
+  "gdVersion": {
+    "build": 99,
+    "major": 4,
+    "minor": 0,
+    "revision": 0
+  },
+  "properties": {
+    "adaptGameResolutionAtRuntime": true,
+    "folderProject": false,
+    "orientation": "landscape",
+    "packageName": "com.example.gamename",
+    "projectUuid": "ca7671df-ecb0-469b-b841-c1e63bd53e16",
+    "scaleMode": "linear",
+    "sizeOnStartupMode": "adaptWidth",
+    "useExternalSourceFiles": false,
+    "version": "1.0.0",
+    "name": "Project",
+    "author": "",
+    "windowWidth": 800,
+    "windowHeight": 600,
+    "latestCompilationDirectory": "",
+    "maxFPS": 60,
+    "minFPS": 20,
+    "verticalSync": false,
+    "platformSpecificAssets": {},
+    "loadingScreen": {
+      "showGDevelopSplash": true
+    },
+    "extensionProperties": [],
+    "extensions": [
+      {
+        "name": "BuiltinObject"
+      },
+      {
+        "name": "BuiltinAudio"
+      },
+      {
+        "name": "BuiltinVariables"
+      },
+      {
+        "name": "BuiltinTime"
+      },
+      {
+        "name": "BuiltinMouse"
+      },
+      {
+        "name": "BuiltinKeyboard"
+      },
+      {
+        "name": "BuiltinJoystick"
+      },
+      {
+        "name": "BuiltinCamera"
+      },
+      {
+        "name": "BuiltinWindow"
+      },
+      {
+        "name": "BuiltinFile"
+      },
+      {
+        "name": "BuiltinNetwork"
+      },
+      {
+        "name": "BuiltinScene"
+      },
+      {
+        "name": "BuiltinAdvanced"
+      },
+      {
+        "name": "Sprite"
+      },
+      {
+        "name": "BuiltinCommonInstructions"
+      },
+      {
+        "name": "BuiltinCommonConversions"
+      },
+      {
+        "name": "BuiltinStringInstructions"
+      },
+      {
+        "name": "BuiltinMathematicalTools"
+      },
+      {
+        "name": "BuiltinExternalLayouts"
+      }
+    ],
+    "platforms": [
+      {
+        "name": "GDevelop JS platform"
+      }
+    ],
+    "currentPlatform": "GDevelop JS platform"
+  },
+  "resources": {
+    "resources": [
+      {
+        "alwaysLoaded": false,
+        "file": "assets/Red Powerup .png",
+        "kind": "image",
+        "metadata": "",
+        "name": "Red Powerup .png",
+        "smoothed": true,
+        "userAdded": false,
+        "origin": {
+          "identifier": "https://resources.gdevelop-app.com/assets/Space Shooter/PNG/Power-ups/Red Powerup .png",
+          "name": "gdevelop-asset-store"
+        }
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "assets/tiled_Wall.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "tiled_Wall.png",
+        "smoothed": true,
+        "userAdded": false,
+        "origin": {
+          "identifier": "https://resources.gdevelop-app.com/assets/Pirate Pack (190 assets)/PNG/Retina/Tiles/tiled_Wall.png",
+          "name": "gdevelop-asset-store"
+        }
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "assets/tiled_Wall-1.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "assets\\tiled_Wall-1.png",
+        "smoothed": true,
+        "userAdded": true
+      }
+    ],
+    "resourceFolders": []
+  },
+  "objects": [],
+  "objectsGroups": [],
+  "variables": [],
+  "layouts": [
+    {
+      "b": 209,
+      "disableInputWhenNotFocused": true,
+      "mangledName": "New_32scene",
+      "name": "New scene",
+      "oglFOV": 90,
+      "oglZFar": 500,
+      "oglZNear": 1,
+      "r": 209,
+      "standardSortMethod": true,
+      "stopSoundsOnStartup": true,
+      "title": "",
+      "v": 209,
+      "uiSettings": {
+        "grid": false,
+        "gridB": 255,
+        "gridG": 180,
+        "gridHeight": 32,
+        "gridOffsetX": 0,
+        "gridOffsetY": 0,
+        "gridR": 158,
+        "gridType": "rectangular",
+        "gridWidth": 32,
+        "snap": true,
+        "windowMask": false,
+        "zoomFactor": 1
+      },
+      "objectsGroups": [],
+      "variables": [
+        {
+          "name": "state",
+          "type": "string",
+          "value": "-0.01"
+        }
+      ],
+      "instances": [
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "RedPowerup",
+          "persistentUuid": "9f4d5b88-6e16-45a8-8632-85c47790cfcc",
+          "width": 0,
+          "x": 388,
+          "y": 284,
+          "zOrder": 1,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 31,
+          "layer": "",
+          "locked": false,
+          "name": "Wall",
+          "persistentUuid": "d742e49e-0e00-41df-b88c-a72fb51c404f",
+          "width": 801,
+          "x": 0,
+          "y": 571,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 31,
+          "layer": "",
+          "locked": false,
+          "name": "Wall",
+          "persistentUuid": "f8ecc162-6a78-470f-9794-8aae51baf6b8",
+          "width": 801,
+          "x": -3,
+          "y": 1,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 600,
+          "layer": "",
+          "locked": false,
+          "name": "Wall",
+          "persistentUuid": "d2f02c9e-6afa-417e-99d0-bd5639d5830c",
+          "width": 26,
+          "x": 773,
+          "y": 0,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "height": 600,
+          "layer": "",
+          "locked": false,
+          "name": "Wall",
+          "persistentUuid": "ffa887a5-f4b6-4d44-a0e6-c9308d00b205",
+          "width": 26,
+          "x": 0,
+          "y": 0,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        }
+      ],
+      "objects": [
+        {
+          "name": "RedPowerup",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [
+            {
+              "name": "Physics2",
+              "type": "Physics2::Physics2Behavior",
+              "bodyType": "Dynamic",
+              "bullet": false,
+              "fixedRotation": true,
+              "canSleep": true,
+              "shape": "Box",
+              "shapeDimensionA": 0,
+              "shapeDimensionB": 0,
+              "shapeOffsetX": 0,
+              "shapeOffsetY": 0,
+              "polygonOrigin": "Center",
+              "vertices": [],
+              "density": 1,
+              "friction": 0.3,
+              "restitution": 0.1,
+              "linearDamping": 0.1,
+              "angularDamping": 0.1,
+              "gravityScale": 0,
+              "layers": 1,
+              "masks": 1
+            }
+          ],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": true,
+                  "timeBetweenFrames": 0.02500000037252903,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "Red Powerup .png",
+                      "points": [
+                        {
+                          "name": "w",
+                          "x": 16.272727966308594,
+                          "y": -0.5818148255348206
+                        },
+                        {
+                          "name": "a",
+                          "x": -0.30908203125,
+                          "y": 15.272727012634277
+                        },
+                        {
+                          "name": "d",
+                          "x": 33.727272033691406,
+                          "y": 15.709090232849121
+                        },
+                        {
+                          "name": "z",
+                          "x": 0.60003662109375,
+                          "y": 33
+                        },
+                        {
+                          "name": "x",
+                          "x": 17.123085021972656,
+                          "y": 33.29230499267578
+                        },
+                        {
+                          "name": "q",
+                          "x": 0,
+                          "y": 0
+                        },
+                        {
+                          "name": "e",
+                          "x": 33.14546203613281,
+                          "y": 0.3636363744735718
+                        },
+                        {
+                          "name": "c",
+                          "x": 34.35385513305664,
+                          "y": 32.79999923706055
+                        }
+                      ],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 17.436368942260742,
+                        "y": 16.436372756958008
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "height": 128,
+          "name": "Wall",
+          "tags": "",
+          "texture": "assets\\tiled_Wall-1.png",
+          "type": "TiledSpriteObject::TiledSprite",
+          "width": 128,
+          "variables": [],
+          "behaviors": [
+            {
+              "name": "Physics2",
+              "type": "Physics2::Physics2Behavior",
+              "bodyType": "Static",
+              "bullet": false,
+              "fixedRotation": false,
+              "canSleep": true,
+              "shape": "Box",
+              "shapeDimensionA": 0,
+              "shapeDimensionB": 0,
+              "shapeOffsetX": 0,
+              "shapeOffsetY": 0,
+              "polygonOrigin": "Center",
+              "vertices": [],
+              "density": 1,
+              "friction": 0.3,
+              "restitution": 0.1,
+              "linearDamping": 0.1,
+              "angularDamping": 0.1,
+              "gravityScale": 0,
+              "layers": 1,
+              "masks": 1
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "disabled": true,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "w"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyPolarForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "",
+                "AngleBetweenPositions(RedPowerup.PointX(\"origin\"), RedPowerup.PointY(\"origin\"), RedPowerup.PointX(\"w\"), RedPowerup.PointY(\"w\"))",
+                "100",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "w"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"w\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"w\"))*Variable(state)",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "d"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"d\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"d\"))*Variable(state)",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "a"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"a\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"a\"))",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "q"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"q\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"q\"))*Variable(state)",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "e"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"e\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"e\"))*Variable(state)",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "z"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"z\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"z\"))*Variable(state)",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "x"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"x\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"x\"))*Variable(state)",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "KeyPressed"
+              },
+              "parameters": [
+                "",
+                "c"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "Physics2::ApplyForce"
+              },
+              "parameters": [
+                "RedPowerup",
+                "Physics2",
+                "(RedPowerup.PointX(\"origin\")-RedPowerup.PointX(\"c\"))*Variable(state)",
+                "(RedPowerup.PointY(\"origin\")-RedPowerup.PointY(\"c\"))*Variable(state)",
+                "RedPowerup.PointX(\"origin\")",
+                "RedPowerup.PointY(\"origin\")"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        }
+      ],
+      "layers": [
+        {
+          "ambientLightColorB": 36,
+          "ambientLightColorG": 7168248,
+          "ambientLightColorR": 32,
+          "followBaseLayerCamera": false,
+          "isLightingLayer": false,
+          "name": "",
+          "visibility": true,
+          "cameras": [
+            {
+              "defaultSize": true,
+              "defaultViewport": true,
+              "height": 0,
+              "viewportBottom": 1,
+              "viewportLeft": 0,
+              "viewportRight": 1,
+              "viewportTop": 0,
+              "width": 0
+            }
+          ],
+          "effects": []
+        }
+      ],
+      "behaviorsSharedData": [
+        {
+          "name": "Physics2",
+          "type": "Physics2::Physics2Behavior",
+          "gravityX": 0,
+          "gravityY": 9.8,
+          "scaleX": 100,
+          "scaleY": 100
+        }
+      ]
+    }
+  ],
+  "externalEvents": [],
+  "eventsFunctionsExtensions": [],
+  "externalLayouts": [],
+  "externalSourceFiles": []
+}
