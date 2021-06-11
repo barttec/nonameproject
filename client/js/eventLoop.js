@@ -343,7 +343,7 @@ function playerColision() {
             var samplerates = Math.round(getMagnitudeVelocity(player));
             if(nextcolision(player, player2, samplerates)) {
                 if(!player2.inColision) {
-                    playerHit(player2,player)
+                    playerHit(player2,player);
                 }
                 player2.inColision = true;   
                 console.log(player2.inColision);
@@ -376,7 +376,6 @@ function movePlayer(player){
             }
         }
     }
-
 }
 function renderPlayers() {
     playerarray.forEach(player => {
